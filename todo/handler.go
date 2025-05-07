@@ -63,7 +63,7 @@ func UpdateTodoHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	updatedTodo, err := UpdateTodo(id, input.Title, input.Content)
+	updatedTodo, err := UpdateTodo(id, input.Title, input.Content, input.IsDone)
 	if err != nil {
 		http.Error(w, "Error al actualizar tarea", http.StatusInternalServerError)
 		return
