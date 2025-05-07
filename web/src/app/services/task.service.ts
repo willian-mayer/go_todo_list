@@ -16,14 +16,14 @@ export class TaskService {
   }
 
   createTask(task: Partial<Task>): Observable<Task> {
-    return this.http.post<Task>(`${this.apiUrl}/create`, task);
+    return this.http.post<Task>(`${this.apiUrl}`, task);
   }
 
   updateTask(id: string, task: Partial<Task>): Observable<Task> {
-    return this.http.put<Task>(`${this.apiUrl}/uptade?id=${id}`, task);
+    return this.http.put<Task>(`${this.apiUrl}/${id}`, task);
   }
 
   deleteTask(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/delete?id=${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

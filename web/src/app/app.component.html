@@ -1,5 +1,10 @@
 <main class="main">
-  <h1>Mi To-Do List.</h1>
+  <button (click)="openModal()">➕ Nueva tarea</button>
   <app-task-list />
 </main>
 
+<app-task-create
+  *ngIf="showModal"
+  (close)="closeModal()"
+  (taskCreated)="reloadTasks()"
+/>
