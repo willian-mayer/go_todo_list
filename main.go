@@ -5,6 +5,9 @@ import (
 	"go-todo-list/todo"
 	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -12,14 +15,27 @@ func main() {
 	todo.InitDB("todos.db")
 	defer todo.DB.Close()
 
-	// Configurar las rutas
-	http.HandleFunc("/todos", todo.GetTodosHandler)         // Obtener todas las tareas
-	http.HandleFunc("/todo", todo.GetTodoByIDHandler)       // Obtener una tarea por ID
-	http.HandleFunc("/todo/create", todo.CreateTodoHandler) // Crear una tarea
-	http.HandleFunc("/todo/update", todo.UpdateTodoHandler) // Actualizar una tarea
-	http.HandleFunc("/todo/delete", todo.DeleteTodoHandler) // Eliminar una tarea
+	// Crear router
+	r := mux.NewRouter()
 
-	// Arrancar el servidor
+	// Definir rutas
+	r.HandleFunc("/todo", todo.GetTodosHandler).Methods("GET")           // Obtener todas las tareas
+	r.HandleFunc("/todo/{id}", todo.GetTodoByIDHandler).Methods("GET")   // Obtener una tarea por ID
+	r.HandleFunc("/todo", todo.CreateTodoHandler).Methods("POST")        // Crear una tarea
+	r.HandleFunc("/todo/{id}", todo.UpdateTodoHandler).Methods("PUT")    // Actualizar una tarea
+	r.HandleFunc("/todo/{id}", todo.DeleteTodoHandler).Methods("DELETE") // Eliminar una tarea
+
+	// Configurar CORS
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"}, // En producción usa tu dominio específico
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"*"},
+		AllowCredentials: true,
+	})
+
+	// Iniciar servidor con CORS
+	handler := c.Handler(r)
+
 	fmt.Println("Servidor escuchando en :8080...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8080", handler))
 }
