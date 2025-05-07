@@ -36,6 +36,6 @@ func main() {
 	// Iniciar servidor con CORS
 	handler := c.Handler(r)
 
-	fmt.Println("Servidor escuchando en :8080...")
+	fmt.Println("Server listening in :8080")
 	log.Fatal(http.ListenAndServe(":8080", handler))
 }
