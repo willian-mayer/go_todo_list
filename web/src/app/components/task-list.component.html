@@ -1,10 +1,24 @@
 <h1 class="text-5xl">Lista de Tareas</h1>
+
 <div *ngIf="tasks.length === 0">No hay tareas.</div>
+
 <ul *ngIf="tasks.length > 0">
-  <li *ngFor="let task of tasks">
+  <li *ngFor="let task of tasks" class="mb-4">
     <strong>{{ task.title }}</strong> - {{ task.content }}
     <span [style.color]="task.is_done ? 'green' : 'red'">
       [{{ task.is_done ? 'Hecho' : 'Pendiente' }}]
     </span>
+
+    <!-- Botones de acción -->
+    <button (click)="openEditModal(task)">Editar</button>
+    <button (click)="deleteTask(task.id)">Eliminar</button>
   </li>
 </ul>
+
+<!-- Modal de edición -->
+<app-task-edit
+  *ngIf="showEditModal"
+  [task]="selectedTask!"
+  (close)="closeEditModal()"
+  (taskUpdated)="loadTasks()"
+/>

@@ -1,0 +1,25 @@
+<div class="modal" (click)="close.emit()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h2>Editar Tarea</h2>
+      <form (ngSubmit)="updateTask()">
+        <label>
+          Título:
+          <input [(ngModel)]="task.title" name="title" required />
+        </label>
+        <br /><br />
+        <label>
+          Contenido:
+          <textarea [(ngModel)]="task.content" name="content"></textarea>
+        </label>
+        <br /><br />
+        <label>
+          <input type="checkbox" [(ngModel)]="task.is_done" name="is_done" />
+          ¿Tarea completada?
+        </label>
+        <br /><br />
+        <button type="submit">Guardar cambios</button>
+        <button type="button" (click)="close.emit()">Cancelar</button>
+      </form>
+    </div>
+  </div>
+  
