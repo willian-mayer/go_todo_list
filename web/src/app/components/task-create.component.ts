@@ -27,7 +27,8 @@ import { TaskService } from '../services/task.service';
 export class TaskCreateComponent {
   title = '';
   content = '';
-
+  is_done = false;
+  
   @Output() close = new EventEmitter<void>();
   @Output() taskCreated = new EventEmitter<void>();
 
@@ -39,7 +40,7 @@ export class TaskCreateComponent {
     this.taskService.createTask({
       title: this.title,
       content: this.content,
-      is_done: false
+      is_done: this.is_done
     }).subscribe(() => {
       this.taskCreated.emit(); // Notifica al padre para recargar la lista
       this.close.emit();       // Cierra el modal

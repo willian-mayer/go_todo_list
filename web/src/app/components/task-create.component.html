@@ -12,6 +12,8 @@
           <textarea [(ngModel)]="content" name="content"></textarea>
         </label>
         <br /><br />
+            <input type="checkbox" [(ngModel)]="is_done" name="is_done">
+        <br /><br />
         <button type="submit">Crear</button>
         <button type="button" (click)="close.emit()">Cancelar</button>
       </form>
