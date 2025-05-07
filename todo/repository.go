@@ -57,7 +57,7 @@ func GetAllTodos() ([]Todo, error) {
 
 // Obtener una tarea por ID (UUID)
 func GetById(id string) (Todo, error) {
-	row := DB.QueryRow("SELECT id, title, content, id_done, created_at, updated_at FROM todos WHERE id = ?", id)
+	row := DB.QueryRow("SELECT id, title, content, is_done, created_at, updated_at FROM todos WHERE id = ?", id)
 
 	var t Todo
 	err := row.Scan(&t.ID, &t.Title, &t.Content, &t.IsDone, &t.CreatedAt, &t.UpdatedAt)
